@@ -10,4 +10,6 @@ public interface AccountService {
     AccountResponse createAccount(CustomerForm customerForm) throws IllegalArgumentException;
 
     List<AccountResponse> findAllWithCustomer();
+
+    AccountResponse findById(Long id);
 }

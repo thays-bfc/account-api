@@ -1,5 +1,6 @@
 package com.bank.api.account.config.validation;
 
+import com.bank.api.account.util.exceptions.AccountException;
 import com.bank.api.account.util.exceptions.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -34,6 +35,15 @@ public class ErrorValidationHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CustomerException.class)
     public List<ErrorFormDTO> handle(CustomerException exception) {
+        List<ErrorFormDTO> errorFormDTOList = new ArrayList<>();
+        ErrorFormDTO error = new ErrorFormDTO(exception.getMessage());
+        errorFormDTOList.add(error);
+
+        return errorFormDTOList;
+    }
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AccountException.class)
+    public List<ErrorFormDTO> handle(AccountException exception) {
         List<ErrorFormDTO> errorFormDTOList = new ArrayList<>();
         ErrorFormDTO error = new ErrorFormDTO(exception.getMessage());
         errorFormDTOList.add(error);

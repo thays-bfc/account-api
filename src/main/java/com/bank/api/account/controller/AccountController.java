@@ -26,6 +26,11 @@ public class AccountController {
             return ResponseEntity.created(uri).body(account);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AccountResponse> listAllAccounts(@PathVariable Long id){
+        return ResponseEntity.ok(accountService.findById(id));
+    }
+
     @GetMapping
     public List<AccountResponse> listAllAccounts(){
         return accountService.findAllWithCustomer();

@@ -7,13 +7,16 @@ import com.bank.api.account.model.Customer;
 import com.bank.api.account.repository.AccountRepository;
 import com.bank.api.account.service.AccountService;
 import com.bank.api.account.service.CustomerService;
+import com.bank.api.account.util.exceptions.AccountException;
 import com.bank.api.account.util.mapper.AccountMapper;
+import com.bank.api.account.util.message.SystemConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,8 +55,18 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findAll().stream().map(a -> accountMapper.mapFrom(a)).collect(Collectors.toList());
     }
 
+    @Override
+    public AccountResponse findById(Long id) {
+        Optional<Account> account = accountRepository.findById(id);
+        if (account.isEmpty()) {
+            throw new AccountException(SystemConstants.Account.NOT_FOUND);
+        }
+        return accountMapper.mapFrom(account.get());
+    }
+
     private Long createCodeNumber() {
      Long nextCode = accountRepository.findNextCode();
         return nextCode + 1L;
     }
+
 }

@@ -11,6 +11,7 @@ import com.bank.api.account.util.exceptions.AccountException;
 import com.bank.api.account.util.mapper.AccountMapper;
 import com.bank.api.account.util.message.SystemConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -59,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountResponse findById(Long id) {
         Optional<Account> account = accountRepository.findById(id);
         if (account.isEmpty()) {
-            throw new AccountException(SystemConstants.Account.NOT_FOUND);
+            throw new AccountException(SystemConstants.Account.NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         return accountMapper.mapFrom(account.get());
     }

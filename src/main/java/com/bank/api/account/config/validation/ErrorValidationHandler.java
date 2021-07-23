@@ -5,7 +5,9 @@ import com.bank.api.account.util.exceptions.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,22 +34,18 @@ public class ErrorValidationHandler {
         });
         return errorFormDTOList;
     }
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+
     @ExceptionHandler(CustomerException.class)
-    public List<ErrorFormDTO> handle(CustomerException exception) {
-        List<ErrorFormDTO> errorFormDTOList = new ArrayList<>();
+    public ResponseEntity<Object> handle(CustomerException exception) {
         ErrorFormDTO error = new ErrorFormDTO(exception.getMessage());
-        errorFormDTOList.add(error);
-
-        return errorFormDTOList;
+        return new ResponseEntity<>(
+                error, new HttpHeaders(), exception.getStatus());
     }
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(AccountException.class)
-    public List<ErrorFormDTO> handle(AccountException exception) {
-        List<ErrorFormDTO> errorFormDTOList = new ArrayList<>();
-        ErrorFormDTO error = new ErrorFormDTO(exception.getMessage());
-        errorFormDTOList.add(error);
 
-        return errorFormDTOList;
+    @ExceptionHandler(AccountException.class)
+    public ResponseEntity<Object> handle(AccountException exception) {
+        ErrorFormDTO error = new ErrorFormDTO(exception.getMessage());
+        return new ResponseEntity<>(
+                error, new HttpHeaders(), exception.getStatus());
     }
 }

@@ -4,6 +4,7 @@ import com.bank.api.account.dto.AccountResponse;
 import com.bank.api.account.dto.CustomerForm;
 import com.bank.api.account.model.Account;
 import com.bank.api.account.model.Customer;
+import com.bank.api.account.model.enums.TransactionType;
 import com.bank.api.account.repository.AccountRepository;
 import com.bank.api.account.service.AccountService;
 import com.bank.api.account.service.CustomerService;
@@ -64,6 +65,21 @@ public class AccountServiceImpl implements AccountService {
         }
         return accountMapper.mapFrom(account.get());
     }
+
+    @Override
+    public Account findAccountByCode(Long code) {
+        Optional<Account> account = accountRepository.findByCode(code);
+        if (account.isEmpty()) {
+            throw new AccountException(SystemConstants.Account.NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+        return account.get();
+    }
+
+    @Override
+    public void save(Account account) {
+        accountRepository.save(account);
+    }
+
 
     private Long createCodeNumber() {
      Long nextCode = accountRepository.findNextCode();

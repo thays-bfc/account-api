@@ -8,4 +8,8 @@ public interface SystemConstants {
     interface Account {
         String NOT_FOUND = "Conta não encontrada.";
     }
+    interface AccountTransaction {
+        String MAX_VALUE = "2000";
+        String MAX_VALUE_EXCEEDED = "Valor máximo %s para depósito excedido.";
+    }
 }

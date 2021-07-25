@@ -1,6 +1,7 @@
 package com.bank.api.account.config.validation;
 
 import com.bank.api.account.util.exceptions.AccountException;
+import com.bank.api.account.util.exceptions.AccountTransactionException;
 import com.bank.api.account.util.exceptions.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -8,6 +9,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,6 +47,15 @@ public class ErrorValidationHandler {
     @ExceptionHandler(AccountException.class)
     public ResponseEntity<Object> handle(AccountException exception) {
         ErrorFormDTO error = new ErrorFormDTO(exception.getMessage());
+        return new ResponseEntity<>(
+                error, new HttpHeaders(), exception.getStatus());
+    }
+
+    @ExceptionHandler(AccountTransactionException.class)
+    public ResponseEntity<Object> handle(AccountTransactionException exception) {
+        String message = ObjectUtils.isEmpty(exception.getParams()) ? exception.getMessage() :
+                String.format(exception.getMessage(), exception.getParams());
+        ErrorFormDTO error = new ErrorFormDTO(message);
         return new ResponseEntity<>(
                 error, new HttpHeaders(), exception.getStatus());
     }

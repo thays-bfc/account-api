@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -26,6 +27,8 @@ public class AccountTransaction {
 
     @Enumerated(EnumType.STRING)
     private TransactionType type;
+
+    private BigDecimal value;
 
     private Date transactionDate;
 

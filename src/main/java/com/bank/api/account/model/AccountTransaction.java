@@ -25,6 +25,10 @@ public class AccountTransaction {
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
+    @ManyToOne
+    @JoinColumn(name = "associated_account_id")
+    private Account associatedAccount;
+
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 

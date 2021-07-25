@@ -5,7 +5,8 @@ import lombok.Getter;
 public enum TransactionType {
     D("Deposit"),
     W("Withdrawal"),
-    T("Transfer");
+    TS("Transfer sent"),
+    TR("Transfer received");
 
     @Getter
     private String description;

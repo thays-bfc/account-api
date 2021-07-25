@@ -11,5 +11,8 @@ public interface SystemConstants {
     interface AccountTransaction {
         String MAX_VALUE = "2000";
         String MAX_VALUE_EXCEEDED = "Valor máximo %s para depósito excedido.";
+        String INSUFFICIENT_BALANCE = "Saldo insuficiente para realizar transação.";
+        String INVALID_SAME_ACCOUNT = "Transação deve ser entre contas diferentes.";
+        String NO_TRANSACTION = "A conta ainda não possui transações.";
     }
 }

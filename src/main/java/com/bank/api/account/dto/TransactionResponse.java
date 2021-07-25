@@ -6,14 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AccountTransactionResponse {
-    private Long accountCode;
-    private BigDecimal accountBalance;
-    private List<TransactionResponse> transactions;
+public class TransactionResponse {
+    private String type;
+    private String associatedAccountName;
+    private BigDecimal value;
 }

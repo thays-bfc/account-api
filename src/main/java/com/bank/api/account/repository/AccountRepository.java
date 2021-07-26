@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query(value="SELECT coalesce(max(ac.code), 0) FROM Account ac")
-    Long findNextCode();
+    Long findCurrentCode();
 
     Optional<Account> findByCode(Long code);
 }

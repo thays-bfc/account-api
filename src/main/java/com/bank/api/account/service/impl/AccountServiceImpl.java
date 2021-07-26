@@ -4,7 +4,6 @@ import com.bank.api.account.dto.AccountResponse;
 import com.bank.api.account.dto.CustomerForm;
 import com.bank.api.account.model.Account;
 import com.bank.api.account.model.Customer;
-import com.bank.api.account.model.enums.TransactionType;
 import com.bank.api.account.repository.AccountRepository;
 import com.bank.api.account.service.AccountService;
 import com.bank.api.account.service.CustomerService;
@@ -82,8 +81,8 @@ public class AccountServiceImpl implements AccountService {
 
 
     private Long createCodeNumber() {
-     Long nextCode = accountRepository.findNextCode();
-        return nextCode + 1L;
+     Long currentCode = accountRepository.findCurrentCode();
+        return currentCode + 1L;
     }
 
 }

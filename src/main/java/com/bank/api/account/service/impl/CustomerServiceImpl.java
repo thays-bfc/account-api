@@ -13,17 +13,11 @@ import java.util.Optional;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
     private CustomerRepository customerRepository;
 
-    @Override
-    public Customer findByCPF(String cpf) {
-        return customerRepository.findByCpf(cpf);
-    }
-
-    @Override
-    public Optional<Customer> findById(Long id) {
-        return customerRepository.findById(id);
+    @Autowired
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     @Override

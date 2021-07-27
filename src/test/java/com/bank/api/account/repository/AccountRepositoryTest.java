@@ -78,7 +78,7 @@ public class AccountRepositoryTest {
     void shouldFindAccountByCode() {
         Optional<Account> bankAccount = repository.findByCode(1L);
         Assertions.assertNotNull(bankAccount.get());
-        Assertions.assertEquals(bankAccount.get().getCustomer().getCpf(),"96259371020" );
+        Assertions.assertEquals("96259371020",bankAccount.get().getCustomer().getCpf() );
     }
 
 }

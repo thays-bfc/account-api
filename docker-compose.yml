@@ -1,0 +1,27 @@
+version: "3"
+services:
+  accountapp:
+    build: .
+    container_name: accountapp
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-container:5432/postgres
+    ports:
+      - 8000:8080
+    restart: always
+    depends_on:
+      - postgres-container
+  postgres-container:
+    image: postgres
+    container_name: postgres-container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5000:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+volumes:
+  pgdata:

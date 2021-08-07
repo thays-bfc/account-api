@@ -7,8 +7,6 @@ import ma.glasnost.orika.MapperFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.text.ParseException;
-
 @Service
 public class AccountMapper {
     private final MapperFacade facade;
@@ -31,14 +29,9 @@ public class AccountMapper {
     }
 
     private String cpfFormatter(String cpf) {
-        try {
-            javax.swing.text.MaskFormatter mask = new javax.swing.text.MaskFormatter("###.###.###-##");
-            javax.swing.JFormattedTextField cpfMask = new javax.swing.JFormattedTextField(mask);
-            cpfMask.setText(cpf);
-            return cpfMask.getText();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        if(cpf.length()==11)
+            return cpf.substring(0,3) + "."+cpf.substring(3,6)+"."+cpf.substring(6,9)+"-"+cpf.substring(9,11);
+
         return cpf;
     }
 }
